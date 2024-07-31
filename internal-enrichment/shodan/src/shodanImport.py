@@ -491,7 +491,10 @@ class ShodanConnector:
                             )
                             stix_objects.append(rel)
 
-                        response = self.shodanAPI.host(result["ip_str"])
+                        try:
+                            response = self.shodanAPI.host(result["ip_str"])
+                        except:
+                            continue
 
                         # Generate a stix bundle
                         bundle_objects = bundle_objects + self._generate_stix_bundle(
