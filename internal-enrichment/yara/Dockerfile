@@ -6,11 +6,11 @@ COPY src /opt/opencti-yara
 
 # Install Python modules
 # hadolint ignore=DL3003
-RUN apt-get update && \
-    apt-get install -y gcc git libmagic1 libffi-dev libxml2-dev libxslt-dev libssl-dev yara && \
-    apt-get clean
+RUN apk --no-cache add git build-base libmagic libffi-dev && \
+    cd /opt/opencti-yara && \
+    pip3 install --no-cache-dir -r requirements.txt && \
+    apk del git build-base
 
-RUN pip3 install --no-cache-dir -r /opt/opencti-yara/requirements.txt
 
 # Expose and entrypoint
 COPY entrypoint.sh /
